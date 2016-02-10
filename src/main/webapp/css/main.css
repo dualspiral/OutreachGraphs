@@ -1,0 +1,22 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.c {
+    height: 100%;
+    width: 95%;
+    padding-top: 50px;
+    margin: 0 auto -50px;
+}
+
+#chart {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
