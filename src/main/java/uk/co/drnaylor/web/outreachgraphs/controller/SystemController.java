@@ -15,6 +15,6 @@ public class SystemController {
 
     @RequestMapping("/input")
     public String getInput(Model model) {
-        return "input";
+        return "control";
     }
 }
