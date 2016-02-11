@@ -68,6 +68,10 @@ public class StateHolder {
     }
 
     private Map<Integer, Long> getAll() {
+        if (this.state == ShowState.CURRENT) {
+            return new HashMap<>();
+        }
+
         if (cache == null) {
             cache = data.values().stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
         }
@@ -76,7 +80,7 @@ public class StateHolder {
     }
 
     private Map<Integer, Long> getCurrent() {
-        if (currentThrowData.isEmpty()) {
+        if (this.state == ShowState.ALL || currentThrowData.isEmpty()) {
             return new HashMap<>();
         }
 
