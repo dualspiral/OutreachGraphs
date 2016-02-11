@@ -30,7 +30,7 @@ public class StateHolder {
 
     public Map<Integer, Long> getData(Instant from, Instant to) {
         return data.entrySet().stream().filter(x -> {
-            Instant s  = Instant.ofEpochSecond(x.getKey());
+            Instant s  = Instant.ofEpochMilli(x.getKey());
             return s.isBefore(to) && s.isAfter(from);
         }).collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
     }
@@ -38,7 +38,7 @@ public class StateHolder {
     public Instant getEarliestInstant() {
         Optional<Long> ol = data.keySet().stream().sorted().findFirst();
         if (ol.isPresent()) {
-            return Instant.ofEpochSecond(ol.get());
+            return Instant.ofEpochMilli(ol.get());
         }
 
         return Instant.now();
@@ -60,9 +60,9 @@ public class StateHolder {
         cache = null;
     }
 
-    public void addData(long seconds, int bin) {
+    public void addData(long milliseconds, int bin) {
         if (bin <= maxBin && bin >= minBin) {
-            currentThrowData.put(seconds, bin);
+            currentThrowData.put(milliseconds, bin);
             returnData = null;
         }
     }
