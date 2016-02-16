@@ -9,6 +9,8 @@ import uk.co.drnaylor.web.outreachgraphs.data.DataToReturn;
 import uk.co.drnaylor.web.outreachgraphs.dataservice.StateHolder;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class DataController {
@@ -52,6 +54,19 @@ public class DataController {
     public boolean commitData() {
         holder.mergeData();
         return true;
+    }
+
+    @RequestMapping(value = "/discarddata", method = {RequestMethod.POST})
+    public boolean discardData() {
+        holder.clearTransient();
+        return true;
+    }
+
+    @RequestMapping(value = "/getState", method = {RequestMethod.GET})
+    public Map<String, String> getState() {
+        Map<String, String> s = new HashMap<>();
+        s.put("state", holder.getState().name());
+        return s;
     }
 
     @RequestMapping(value = "/save")

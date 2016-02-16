@@ -109,6 +109,11 @@ public class StateHolder {
         cache = null;
     }
 
+    public void clearTransient() {
+        currentThrowData.clear();
+        returnData = null;
+    }
+
     public void addData(long milliseconds, int bin) {
         if (bin <= maxBin && bin >= minBin) {
             currentThrowData.put(milliseconds, bin);
