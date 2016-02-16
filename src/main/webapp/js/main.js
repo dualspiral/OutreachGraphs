@@ -7,6 +7,17 @@
 var m = (function() {
     var myChart;
 
+    var callAjax = function() {
+        $.ajax("/getdata").done(function(res) {
+            $("#titlename").text(res.title);
+            myChart.data.datasets[0].data = res.data[0];
+            myChart.data.datasets[1].data = res.data[1];
+            myChart.update();
+
+            window.setTimeout(callAjax, 1000);
+        });
+    };
+
     return {
         updateData: function () {
             myChart.data.datasets[0].data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
@@ -55,6 +66,8 @@ var m = (function() {
                     }
                 }
             });
+
+            window.setTimeout(callAjax, 1000);
         }
     }
 })();

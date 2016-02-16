@@ -1,8 +1,18 @@
 package uk.co.drnaylor.web.outreachgraphs.dataservice;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import uk.co.drnaylor.web.outreachgraphs.SaveDaemon;
 import uk.co.drnaylor.web.outreachgraphs.data.DataToReturn;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.Function;
@@ -19,6 +29,45 @@ public class StateHolder {
     private Map<Integer, Long> cache = null;
     private ShowState state = ShowState.ALL;
     private DataToReturn returnData = null;
+    private final Path file = Paths.get("data.json");
+
+    @Autowired
+    private ApplicationContext appContext;
+
+    public StateHolder() throws IOException {
+        try {
+            load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        Thread tr = new Thread(new SaveDaemon(this));
+
+        // This thread doesn't block the JVM shutdown.
+        tr.setDaemon(true);
+        tr.start();
+    }
+
+    public synchronized void load() throws IOException {
+        if (Files.exists(file)) {
+            BufferedReader br = new BufferedReader(new FileReader(file.toFile()));
+            Gson gson = new Gson();
+            Map<Long, Integer> m = gson.getAdapter(new TypeToken<Map<Long, Integer>>() {}).fromJson(br);
+            data.clear();
+            data.putAll(m);
+        }
+    }
+
+    public synchronized void save() throws IOException {
+        if (!Files.exists(file)) {
+            Files.createFile(file);
+        }
+
+        FileWriter bw = new FileWriter(file.toFile(), false);
+        bw.write(new Gson().getAdapter(new TypeToken<Map<Long, Integer>>(){}).toJson(data));
+        bw.close();
+    }
 
     public DataToReturn getData() {
         if (returnData == null) {

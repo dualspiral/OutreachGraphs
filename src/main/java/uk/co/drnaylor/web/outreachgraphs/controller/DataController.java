@@ -6,19 +6,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.drnaylor.web.outreachgraphs.data.DataToReturn;
-import uk.co.drnaylor.web.outreachgraphs.dataservice.H2DataService;
 import uk.co.drnaylor.web.outreachgraphs.dataservice.StateHolder;
+
+import java.io.IOException;
 
 @RestController
 public class DataController {
 
     private final StateHolder holder;
-    private final H2DataService service;
 
     @Autowired
-    public DataController(StateHolder holder, H2DataService service) {
+    public DataController(StateHolder holder) {
         this.holder = holder;
-        this.service = service;
     }
 
     @RequestMapping(value = "/getdata", method = {RequestMethod.GET})
@@ -57,6 +56,13 @@ public class DataController {
 
     @RequestMapping(value = "/save")
     public boolean save() {
+        try {
+            holder.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 }

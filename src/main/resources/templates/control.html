@@ -32,14 +32,14 @@
 
 <div class="c">
     <h2>View State</h2>
-    <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default">All</button>
-        <button type="button" class="btn btn-default">All vs. Current Session</button>
-        <button type="button" class="btn btn-default">Current Session</button>
+    <div class="btn-group viewtype" role="group" aria-label="...">
+        <button type="button" data-ret="all" class="btn btn-default">All</button>
+        <button type="button" data-ret="allcurrent" class="btn btn-default">All vs. Current Session</button>
+        <button type="button" data-ret="current" class="btn btn-default">Current Session</button>
     </div>
 
         <h2>Buttons</h2>
-    <div class="btn-group" role="group" aria-label="...">
+    <div class="btn-group throwbtn" role="group" aria-label="...">
         <button type="button" class="btn btn-default btn-lg">-9</button>
         <button type="button" class="btn btn-default btn-lg">-8</button>
         <button type="button" class="btn btn-default btn-lg">-7</button>
@@ -62,7 +62,7 @@
     </div>
 
     <h2>Commit</h2>
-    <button type="button" class="btn btn-success">Complete Session</button>
+    <button type="button" id="commit" class="btn btn-success">Complete Session</button>
 </div>
 
 </body>
