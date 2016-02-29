@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class StateHolder {
 
-    public final static int minBin = -9;
-    public final static int maxBin = 9;
+    public final static int minBin = -4;
+    public final static int maxBin = 4;
 
     private final Map<Long, Integer> data = new HashMap<>();
     private final Map<Long, Integer> currentThrowData = new HashMap<>();

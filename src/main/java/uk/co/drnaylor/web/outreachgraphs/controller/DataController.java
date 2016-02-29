@@ -80,4 +80,9 @@ public class DataController {
 
         return true;
     }
+
+    @RequestMapping(value = "/keepalive")
+    public boolean keepAlive() {
+        return true;
+    }
 }

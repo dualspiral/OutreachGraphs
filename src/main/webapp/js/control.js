@@ -6,6 +6,8 @@
 
 var c = (function() {
 
+    var checking = false;
+
     var setState = function(state) {
         $.ajax({
             method: "POST",
@@ -13,8 +15,34 @@ var c = (function() {
             data: {
                 state: state
             }
-        })
-    }
+        });
+    };
+
+    var callAjax = function() {
+        if (!checking) {
+            checking = true;
+
+            $.ajax("/getState").done(function(res) {
+                if (res.state == "CURRENT") {
+                    $("button[data-ret=allcurrent]").removeClass("btn-info");
+                    $("button[data-ret=current]").addClass("btn-info");
+                } else {
+                    $("button[data-ret=allcurrent]").addClass("btn-info");
+                    $("button[data-ret=current]").removeClass("btn-info");
+                }
+
+                $('#status').text("Link Status: OK");
+                $('#status').addClass("green");
+                $('#status').removeClass("red");
+            }).fail(function(res) {
+                $('#status').text("Link Status: Error");
+                $('#status').addClass("red");
+                $('#status').removeClass("green");
+            }).always(function() {
+                checking = false;
+            });
+        }
+    };
 
     return {
         init: function() {
@@ -23,7 +51,7 @@ var c = (function() {
                 setState($(this).attr("data-ret"));
             });
 
-            $('.throwbtn > button').click(function(e) {
+            $('.throwbtn button').click(function(e) {
                 $.ajax({
                     method: "POST",
                     url: "/postdata",
@@ -31,12 +59,11 @@ var c = (function() {
                         time: Date.now(),
                         bin: $(this).text()
                     }
-                }).done(function() {
-                    setState("current");
                 })
             });
 
             $('#commit').click(function(e) {
+                $('#modal').modal('hide');
                 $.ajax({
                     method: "POST",
                     url: "/commitdata"
@@ -44,6 +71,15 @@ var c = (function() {
                     setState("allcurrent");
                 })
             });
+
+            $('#startModal').click(function(e) {
+                setState("current");
+                $('#modal').modal('show');
+            });
+
+            window.setInterval(function() {
+                callAjax();
+            }, 1000);
         }
     }
 
