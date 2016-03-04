@@ -22,13 +22,28 @@ var c = (function() {
         if (!checking) {
             checking = true;
 
-            $.ajax("/getState").done(function(res) {
+            $.ajax("/getdata?all=true").done(function(res) {
                 if (res.state == "CURRENT") {
                     $("button[data-ret=allcurrent]").removeClass("btn-info");
                     $("button[data-ret=current]").addClass("btn-info");
                 } else {
                     $("button[data-ret=allcurrent]").addClass("btn-info");
                     $("button[data-ret=current]").removeClass("btn-info");
+                }
+
+                $("#count").text(res.numberOfThrows);
+                $("#counters").html('');
+
+                // First array
+                keys = Object.keys(res.dataMap).sort();
+                for (var i = 0; i < keys.length; i++) {
+                    $('#counters').append("<tr>" +
+                        "<td>" +
+                        keys[i] +
+                        "</td><td>" +
+                        res.dataMap[keys[i]] +
+                        "</td>" +
+                        "</tr>")
                 }
 
                 $('#status').text("Link Status: OK");

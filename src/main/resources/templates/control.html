@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="/css/main.css" />
 
     <script src="/js/jquery.min.js"></script>
@@ -39,9 +40,31 @@
 </nav>
 
 <div class="c">
-    <h2>Modal</h2>
+    <h2>Start Throw</h2>
     <button type="button" id="startModal" class="btn btn-primary">Start</button>
+
+    <h2>Data</h2>
+    <p>
+        <strong>Number of throws: </strong> <span id="count">0</span>
+    </p>
+    <h3>Data breakdown</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 50px;">
+                    Bin
+                </th>
+                <th>
+                    Count
+                </th>
+            </tr>
+        </thead>
+        <tbody id="counters">
+
+        </tbody>
+    </table>
 </div>
+
 
 <!-- Modal -->
 <div id="modal" class="modal fade" tabindex="-1" role="dialog">

@@ -29,6 +29,7 @@ public class StateHolder {
     private Map<Integer, Long> cache = null;
     private ShowState state = ShowState.ALL;
     private DataToReturn returnData = null;
+    private DataToReturn returnDataAll = null;
     private final Path file = Paths.get("data.json");
 
     @Autowired
@@ -69,12 +70,13 @@ public class StateHolder {
         bw.close();
     }
 
-    public DataToReturn getData() {
+    public DataToReturn getData(boolean all) {
         if (returnData == null) {
-            returnData = new DataToReturn(this.state.title, getAll(), getCurrent());
+            returnData = new DataToReturn(this.state.title, getAll(false), getCurrent(false), state);
+            returnDataAll = new DataToReturn(this.state.title, getAll(true), getCurrent(true), state);
         }
 
-        return returnData;
+        return all ? returnDataAll : returnData;
     }
 
     public Map<Integer, Long> getData(Instant from, Instant to) {
@@ -121,8 +123,8 @@ public class StateHolder {
         }
     }
 
-    private Map<Integer, Long> getAll() {
-        if (this.state == ShowState.CURRENT) {
+    private Map<Integer, Long> getAll(boolean all) {
+        if (!all && this.state == ShowState.CURRENT) {
             return new HashMap<>();
         }
 
@@ -133,8 +135,8 @@ public class StateHolder {
         return cache;
     }
 
-    private Map<Integer, Long> getCurrent() {
-        if (this.state == ShowState.ALL || currentThrowData.isEmpty()) {
+    private Map<Integer, Long> getCurrent(boolean all) {
+        if (!all && this.state == ShowState.ALL || currentThrowData.isEmpty()) {
             return new HashMap<>();
         }
 

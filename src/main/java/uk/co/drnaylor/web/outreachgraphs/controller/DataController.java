@@ -23,8 +23,8 @@ public class DataController {
     }
 
     @RequestMapping(value = "/getdata", method = {RequestMethod.GET})
-    public DataToReturn getBinData() {
-        return holder.getData();
+    public DataToReturn getBinData(@RequestParam(value = "all", defaultValue = "false", required = false) boolean all) {
+        return holder.getData(all);
     }
 
     @RequestMapping(value = "/postdata", method = {RequestMethod.POST})

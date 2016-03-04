@@ -8,13 +8,11 @@ var m = (function() {
     var myChart;
 
     var callAjax = function() {
-        $.ajax("/getdata").done(function(res) {
+        $.ajax("/getdata?all=false").done(function(res) {
             $("#titlename").text(res.title);
             myChart.data.datasets[0].data = res.data[0];
             myChart.data.datasets[1].data = res.data[1];
             myChart.update();
-
-            window.setTimeout(callAjax, 1000);
         });
     };
 
@@ -64,7 +62,7 @@ var m = (function() {
                 }
             });
 
-            window.setTimeout(callAjax, 1000);
+            window.setInterval(callAjax, 1000);
         }
     }
 })();
