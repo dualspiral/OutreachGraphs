@@ -35,7 +35,7 @@ var c = (function() {
                 $("#counters").html('');
 
                 // First array
-                keys = Object.keys(res.dataMap).sort();
+                keys = Object.keys(res.dataMap).sort(function(a,b) { return Number(a)-Number(b) });
                 for (var i = 0; i < keys.length; i++) {
                     $('#counters').append("<tr>" +
                         "<td>" +
