@@ -66,7 +66,7 @@ var c = (function() {
                 setState($(this).attr("data-ret"));
             });
 
-            $('.throwbtn button').click(function(e) {
+            $('.throwbtn .divthrow').click(function(e) {
                 $.ajax({
                     method: "POST",
                     url: "/postdata",
