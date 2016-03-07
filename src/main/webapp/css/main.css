@@ -33,3 +33,11 @@ body {
 .green {
     color: #2b542c;
 }
+
+.divthrow {
+    display: inline-block;
+    border: 1px solid black;
+    height: 75px;
+    line-height: 75px;
+    text-align: center;
+}

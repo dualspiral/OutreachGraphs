@@ -7,6 +7,7 @@
 var c = (function() {
 
     var checking = false;
+    var inited = false;
 
     var setState = function(state) {
         $.ajax({
@@ -46,6 +47,17 @@ var c = (function() {
                         "</tr>")
                 }
 
+                if (!inited) {
+                    // Create the button list for the popup.
+                    // Get the percentage by dividing by the number of boxes.
+                    var per = (100 / keys.length);
+                    for (var i = 0; i < keys.length; i++) {
+                        $('.throwbtn').append("<div class='divthrow' style='width: " + per + "%;'>" + keys[i] + "</div>");
+                    }
+
+                    inited = true;
+                }
+
                 $('#status').text("Link Status: OK");
                 $('#status').addClass("green");
                 $('#status').removeClass("red");
@@ -66,15 +78,24 @@ var c = (function() {
                 setState($(this).attr("data-ret"));
             });
 
-            $('.throwbtn .divthrow').click(function(e) {
-                $.ajax({
-                    method: "POST",
-                    url: "/postdata",
-                    data: {
-                        time: Date.now(),
-                        bin: $(this).text()
-                    }
-                })
+            $('.throwbtn').click(function(event) {
+                var target = $(event.target);
+                if (target.hasClass('divthrow')) {
+                    // We only care for the div within
+                    $(target).animate({backgroundColor: 'yellow'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                    $.ajax({
+                        method: "POST",
+                        url: "/postdata",
+                        data: {
+                            time: Date.now(),
+                            bin: target.text()
+                        }
+                    }).done(function(e) {
+                        $(target).animate({backgroundColor: 'green'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                    }).fail(function(res) {
+                        $(target).animate({backgroundColor: 'red'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                    });
+                }
             });
 
             $('#commit').click(function(e) {
