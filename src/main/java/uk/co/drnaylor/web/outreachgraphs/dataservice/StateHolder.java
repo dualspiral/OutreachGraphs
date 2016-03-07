@@ -130,6 +130,13 @@ public class StateHolder {
 
         if (cache == null) {
             cache = data.values().stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+            for (int i = minBin; i <= maxBin; i++) {
+
+                // Make sure the map still has the key in it.
+                if (!cache.containsKey(i)) {
+                    cache.put(i, 0L);
+                }
+            }
         }
 
         return cache;
