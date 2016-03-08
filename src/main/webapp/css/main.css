@@ -41,3 +41,13 @@ body {
     line-height: 75px;
     text-align: center;
 }
+
+.navbar-hull {
+    background: black;
+    color: white;
+    font-family: 'Georgia', sans-serif;
+}
+
+.navbar-hull a, .navbar-hull a:hover, .navbar-hull a:focus {
+    color: white !important;
+}
