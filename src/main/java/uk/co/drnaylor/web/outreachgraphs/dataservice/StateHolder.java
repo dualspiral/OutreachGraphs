@@ -151,9 +151,9 @@ public class StateHolder {
     }
 
     public enum ShowState {
-        CURRENT("Current Session: Distribution"),
-        ALL_CURRENT("All throws vs. Current Session"),
-        ALL("Distribution of all throws");
+        CURRENT("Throw Distribution (Current only)"),
+        ALL_CURRENT("Throw Distribution"),
+        ALL("Throw Distribution");
 
         final String title;
 

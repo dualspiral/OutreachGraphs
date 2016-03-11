@@ -27,10 +27,10 @@ var m = (function() {
                 data: {
                     labels: ["-4", "-3", "-2", "-1", "0", "1", "2", "3", "4"],
                     datasets: [{
-                        backgroundColor: "rgba(0,0,220,0.5)",
+                        backgroundColor: "blue",
                         data: [0, 0, 0, 0, 0, 0, 0, 0, 0]
                     }, {
-                        backgroundColor: "rgba(220,0,0,0.5)",
+                        backgroundColor: "green",
                         data: [1, 0, 0, 0, 0, 0, 0, 0, 0]
                     }]
                 },
@@ -42,7 +42,7 @@ var m = (function() {
                     scales:{
                         xAxes:[{
                            barPercentage:1,
-                           categoryPercentage:1,
+                           categoryPercentage:0.9,
                            stacked: true,
                            gridLines: {
                                drawOnChartArea: false
