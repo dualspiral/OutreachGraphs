@@ -51,8 +51,11 @@ var c = (function() {
                     // Create the button list for the popup.
                     // Get the percentage by dividing by the number of boxes.
                     var per = (100 / keys.length);
+
                     for (var i = 0; i < keys.length; i++) {
-                        $('.throwbtn').append("<div class='divthrow' style='width: " + per + "%;'>" + keys[i] + "</div>");
+                        var c = getColour(Number(keys[i]));
+                        var t = getTextColour(Number(keys[i]));
+                        $('.throwbtn').append("<div class='divthrow' data-colour='" + c + "' style='color:" + t + "; background-color:" + c + "; width:" + per + "%;'>" + keys[i] + "</div>");
                     }
 
                     inited = true;
@@ -71,6 +74,30 @@ var c = (function() {
         }
     };
 
+    var getColour = function(number) {
+        var n = Math.abs(number);
+        if (n > 3) {
+            return "#002cfb";
+        } else if (n == 3) {
+            return "#1c7e12";
+        } else if (n == 2) {
+            return "#fffc38";
+        } else if (n == 1) {
+            return "#fb6720";
+        }
+
+        return "#fa141b";
+    };
+
+    var getTextColour = function(number) {
+        var n = Math.abs(number);
+        if (n > 2 || n == 0) {
+            return "white";
+        }
+
+        return "black";
+    };
+
     return {
         init: function() {
 
@@ -82,7 +109,7 @@ var c = (function() {
                 var target = $(event.target);
                 if (target.hasClass('divthrow')) {
                     // We only care for the div within
-                    $(target).animate({backgroundColor: 'yellow'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                    $(target).animate({backgroundColor: '#FFFFCC'}, 250, function() { $(target).animate({backgroundColor: $(target).attr('data-colour')}, 1000) });
                     $.ajax({
                         method: "POST",
                         url: "/postdata",
@@ -91,9 +118,9 @@ var c = (function() {
                             bin: target.text()
                         }
                     }).done(function(e) {
-                        $(target).animate({backgroundColor: 'green'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                        $(target).animate({backgroundColor: '#5EFB6E'}, 250, function() { $(target).animate({backgroundColor: $(target).attr('data-colour')}, 1000) });
                     }).fail(function(res) {
-                        $(target).animate({backgroundColor: 'red'}, 250, function() { $(target).animate({backgroundColor: 'white'}, 1000) });
+                        $(target).animate({backgroundColor: '#800517'}, 250, function() { $(target).animate({backgroundColor: $(target).attr('data-colour')}, 1000) });
                     });
                 }
             });
