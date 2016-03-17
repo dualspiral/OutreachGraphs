@@ -76,13 +76,13 @@ var c = (function() {
 
     var getColour = function(number) {
         var n = Math.abs(number);
-        if (n > 3) {
+        if (n > 6) {
             return "#002cfb";
-        } else if (n == 3) {
+        } else if (n == 6 || n == 5) {
             return "#1c7e12";
-        } else if (n == 2) {
+        } else if (n == 4 || n == 3) {
             return "#fffc38";
-        } else if (n == 1) {
+        } else if (n == 2 || n == 1) {
             return "#fb6720";
         }
 
@@ -91,7 +91,7 @@ var c = (function() {
 
     var getTextColour = function(number) {
         var n = Math.abs(number);
-        if (n > 2 || n == 0) {
+        if (n > 4 || n == 0) {
             return "white";
         }
 
